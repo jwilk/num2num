@@ -4,8 +4,8 @@
 # Copyright © 2021 Jakub Wilk <jwilk@jwilk.net>
 # SPDX-License-Identifier: MIT
 
-import sys
 import argparse
+import sys
 
 import roman
 
