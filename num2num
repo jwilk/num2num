@@ -9,6 +9,13 @@ import argparse
 
 import roman
 
+def num2num(s):
+    try:
+        return roman.fromRoman(s.upper())
+    except roman.InvalidRomanNumeralError:
+        pass
+    return int(s, 0)
+
 def main():
     ap = argparse.ArgumentParser()
     ap.parse_args()
@@ -16,13 +23,10 @@ def main():
     for s in sys.stdin:
         s = s.strip()
         try:
-            i = roman.fromRoman(s.upper())
-        except roman.InvalidRomanNumeralError:
-            try:
-                i = int(s, 0)
-            except ValueError:
-                print(f'{prog}: invalid numeral: {s!r}', file=sys.stderr)
-                continue
+            i = num2num(s)
+        except ValueError:
+            print(f'{prog}: invalid numeral: {s!r}', file=sys.stderr)
+            continue
         print(i)
 if __name__ == '__main__':
     main()
