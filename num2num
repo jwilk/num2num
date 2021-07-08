@@ -5,6 +5,7 @@
 # SPDX-License-Identifier: MIT
 
 import argparse
+import re
 import sys
 
 import roman
@@ -16,18 +17,22 @@ def num2num(s):
         pass
     return int(s, 0)
 
+def subst_num(match):
+    s = match.group()
+    try:
+        return str(num2num(s))
+    except ValueError:
+        return s
+
 def main():
     ap = argparse.ArgumentParser()
     ap.parse_args()
     prog = ap.prog
+    num_re = re.compile(r'\b([0-9]+|0x[0-9a-f]+|0o[0-7]+|0b[0-1]+|[MDCLXVI]+)\b', re.IGNORECASE)
     for s in sys.stdin:
-        s = s.strip()
-        try:
-            i = num2num(s)
-        except ValueError:
-            print(f'{prog}: invalid numeral: {s!r}', file=sys.stderr)
-            continue
-        print(i)
+        s = num_re.sub(subst_num, s)
+        print(s, end='')
+
 if __name__ == '__main__':
     main()
 
