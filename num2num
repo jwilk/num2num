@@ -28,6 +28,7 @@ def subst_num(match):
 
 def main():
     ap = argparse.ArgumentParser()
+    ap.color = False
     ap.parse_args()
     num_re = re.compile(r'\b([0-9]+|0x[0-9a-f]+|0o[0-7]+|0b[0-1]+|[MDCLXVI]+)\b', re.IGNORECASE)
     for s in sys.stdin:
